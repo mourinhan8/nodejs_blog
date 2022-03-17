@@ -1,7 +1,6 @@
 //const res = require("express/lib/response");
 
 class SiteController {
-
     // [GET] /
     index(req, res) {
         res.render('news');
@@ -9,8 +8,8 @@ class SiteController {
 
     // [GET] /search
     search(req, res) {
-        res.render('search')
+        res.render('search');
     }
 }
 
-module.exports = new SiteController
+module.exports = new SiteController();
