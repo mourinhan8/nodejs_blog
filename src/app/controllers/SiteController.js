@@ -1,9 +1,16 @@
-//const res = require("express/lib/response");
-
+const Post = require('../models/Post');
 class SiteController {
     // [GET] /
     index(req, res) {
-        res.render('news');
+
+        Post.find({}, function (err, posts) {
+            if (!err){
+                res.json(posts);
+            } else {
+                res.status(400).json({ error: 'ERROR!!!' })
+            }
+        });
+        
     }
 
     // [GET] /search

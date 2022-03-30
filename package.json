@@ -27,7 +27,8 @@
   "homepage": "https://github.com/mourinhan8/nodejs_blog#readme",
   "dependencies": {
     "express": "^4.17.3",
-    "express-handlebars": "^6.0.2"
+    "express-handlebars": "^6.0.2",
+    "mongoose": "^6.2.9"
   },
   "lint-staged": {
     "src/**/*.{js, json, scss}": "prettier --single-quote --trailing-comma all --tab-width 4 --write"

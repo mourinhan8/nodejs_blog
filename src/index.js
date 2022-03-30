@@ -5,7 +5,12 @@ const render = require('express/lib/response');
 const morgan = require('morgan');
 const app = express();
 const port = 3000;
+
+const db = require('./config/db');
 const route = require('./routes');
+
+// Connect to db
+db.connect();
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -28,5 +33,5 @@ app.set('views', path.join(__dirname, '/resources/views'));
 route(app);
 
 app.listen(port, () => {
-    console.log(`Example app listening at https://localhost:${port}`);
+    console.log(`App listening at https://localhost:${port}`);
 });
