@@ -1,9 +1,8 @@
 const Post = require('../models/Post');
-const { multipleMongooseToObj } = require('../../util/mongoose')
+const { multipleMongooseToObj } = require('../../util/mongoose');
 class SiteController {
     // [GET] /
     index(req, res) {
-
         // Callback
         // Post.find({}, function (err, posts, next) {
         //     if (!err){
@@ -16,13 +15,12 @@ class SiteController {
 
         // Promise
         Post.find({})
-            .then(posts => {
+            .then((posts) => {
                 res.render('home', {
-                    posts: multipleMongooseToObj(posts)
+                    posts: multipleMongooseToObj(posts),
                 });
             })
-            .catch(err => next(err))
-
+            .catch((err) => next(err));
     }
 
     // [GET] /search

@@ -1,7 +1,7 @@
 const express = require('express');
 const handlebars = require('express-handlebars');
 const path = require('path');
-const methodOverride = require('method-override')
+const methodOverride = require('method-override');
 const render = require('express/lib/response');
 const morgan = require('morgan');
 const app = express();
@@ -22,7 +22,7 @@ app.use(
 );
 app.use(express.json());
 
-app.use(methodOverride('_method'))
+app.use(methodOverride('_method'));
 
 // HTTP logger
 app.use(morgan('combined'));
@@ -34,8 +34,9 @@ app.engine(
         extname: '.hbs',
         helpers: {
             sum: (a, b) => a + b,
-        }
-    }));
+        },
+    }),
+);
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, '/resources/views'));
 // console.log("day la thu muc" ,path.join(__dirname, '/resources/views'))

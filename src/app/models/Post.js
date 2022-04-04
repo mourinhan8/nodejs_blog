@@ -5,17 +5,20 @@ mongoose.plugin(slug);
 
 const Schema = mongoose.Schema;
 
-const Post = new Schema({
-    name: { type: String, required: true },
-    description: { type: String },
-    img: { type: String, },
-    videoID: { type: String, required: true },
-    level: { type: String, maxLength: 255 },
-    slug: { type: String, slug: 'name', unique: true }
-    // createdAt: { type: Date, default: Date.now },
-    // updatedAt: { type: Date, default: Date.now },
-},{
-    timestamps: true,
-});
+const Post = new Schema(
+    {
+        name: { type: String, required: true },
+        description: { type: String },
+        img: { type: String },
+        videoID: { type: String, required: true },
+        level: { type: String, maxLength: 255 },
+        slug: { type: String, slug: 'name', unique: true },
+        // createdAt: { type: Date, default: Date.now },
+        // updatedAt: { type: Date, default: Date.now },
+    },
+    {
+        timestamps: true,
+    },
+);
 
 module.exports = mongoose.model('Post', Post);
