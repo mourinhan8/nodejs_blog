@@ -19,11 +19,11 @@ class PostController {
 
     // [POST] /posts/store
     store(req, res, next) {
-        const formData = req.body;
+        const formData = { ...req.body };
         formData.img = `https://img.youtube.com/vi/${req.body.videoID}/sddefault.jpg`;
         const post = new Post(formData);
         post.save()
-            .then(() => res.redirect('/'))
+            .then(() => res.redirect('/me/stored/posts'))
             .catch((error) => {});
     }
 
@@ -48,7 +48,21 @@ class PostController {
 
     // [DELETE] /posts/:id
     destroy(req, res, next) {
+        Post.delete({ _id: req.params.id })
+            .then(() => res.redirect('back'))
+            .catch(next);
+    }
+
+    // [DELETE] /posts/:id/force-delete
+    forceDestroy(req, res, next) {
         Post.deleteOne({ _id: req.params.id })
+            .then(() => res.redirect('back'))
+            .catch(next);
+    }
+
+    // [PATCH] /posts/:id/restore
+    restore(req, res, next) {
+        Post.restore({ _id: req.params.id })
             .then(() => res.redirect('back'))
             .catch(next);
     }

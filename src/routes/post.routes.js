@@ -7,7 +7,9 @@ router.get('/create', postController.create);
 router.post('/store', postController.store);
 router.get('/:id/edit', postController.edit);
 router.put('/:id', postController.update);
+router.patch('/:id/restore', postController.restore);
 router.delete('/:id', postController.destroy);
+router.delete('/:id/force-delete', postController.forceDestroy);
 router.get('/:slug', postController.show);
 
 module.exports = router;
