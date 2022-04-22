@@ -1,10 +1,29 @@
 <div class="mt-4">
-    <h3>Khoá học của tôi</h3>
-    <a href="/me/trash/posts">Thùng rác ({{deletedCount}})</a>
+    <div>
+        <h3>Khoá học của tôi</h3>
+        <a href="/me/trash/posts">Thùng rác ({{deletedCount}})</a>
+        <div class="mt-4 d-flex align-items-center">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="checkbox-all">
+                <label class="form-check-label" for="checkbox-all">
+                    Chọn tất cả
+                </label>
+            </div>
+            <select class="form-control form-control-sm checkbox-select-all-options" id="">
+                <option>-- Hành động --</option>
+                <option value="delete">Xoá</option>
+            </select>
+
+            <button class="btn btn-primary btn-sm disabled">
+                Áp dụng
+            </button>
+        </div>
+    </div>
+
     <table class="table mt-4">
         <thead>
             <tr>
-                <th scope="col">#</th>
+                <th scope="col" colspan="2">#</th>
                 <th scope="col">Tên bài</th>
                 <th scope="col">Trình độ</th>
                 <th scope="col">Thời gian tạo</th>
@@ -14,6 +33,11 @@
         <tbody>
             {{#each posts}}
             <tr>
+                <td>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="postIds[]" value="{{this._id}}">
+                    </div>
+                </td>
                 <th scope="row">{{sum @index 1}}</th>
                 <td>{{this.name}}</td>
                 <td>{{this.level}}</td>
@@ -65,8 +89,11 @@
     document.addEventListener('DOMContentLoaded', function () {
 
         var postID;
-        var deleteForm = document.forms['delete-post-form']
-        var btnDeletePost = document.getElementById('btn-delete-post')
+        var deleteForm = document.forms['delete-post-form'];
+        var btnDeletePost = document.getElementById('btn-delete-post');
+        var checkboxAll = $('#checkbox-all');
+        //var checkboxAll = document.getElementById('checkbox-all')
+        var postItemCheckbox = $('input[name="postIds[]"]')
 
         // When dialog confirm clicked
         $('#delete-post-dialog').on('show.bs.modal', function (event) {
@@ -74,12 +101,26 @@
             postID = button.data('id');
             //console.log(id);
         });
-        
+
         //console.log(btnDeletePost)
-        btnDeletePost.onclick = function() {
+        btnDeletePost.onclick = function () {
             deleteForm.action = '/posts/' + postID + '?_method=DELETE';
             deleteForm.submit();
         }
+
+        // Checkbox all clicked
+        checkboxAll.change(function() {
+            var isCheckedAll = $(this).prop('checked');
+            postItemCheckbox.prop('checked', isCheckedAll);
+        })
+        //Post item checkbox clicked
+        postItemCheckbox.change(function() {
+            var isCheckedAll = postItemCheckbox.length === $('input[name="postIds[]"]:checked').length
+            checkboxAll.prop('checked', isCheckedAll);
+        })
+
+        // JS thuan
+        //checkboxAll.onchange = function() {console.log(checkboxAll.checked);}
 
     });
 </script>
