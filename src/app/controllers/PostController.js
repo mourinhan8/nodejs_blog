@@ -23,7 +23,7 @@ class PostController {
         formData.img = `https://img.youtube.com/vi/${req.body.videoID}/sddefault.jpg`;
         const post = new Post(formData);
         post.save()
-            .then(() => res.redirect('/me/stored/posts'))
+            .then(() => res.redirect(`/posts/${post.slug}`))
             .catch((error) => {});
     }
 
@@ -42,7 +42,11 @@ class PostController {
     // [PUT] /posts/:id
     update(req, res, next) {
         Post.updateOne({ _id: req.params.id }, req.body)
-            .then(() => res.redirect('/me/stored/posts'))
+            .then(() => Post.findById( req.params.id))
+            .then((post) => {
+                var slug = post.slug;
+                res.redirect(`/posts/${slug}`);
+            })
             .catch(next);
     }
 
@@ -65,6 +69,19 @@ class PostController {
         Post.restore({ _id: req.params.id })
             .then(() => res.redirect('back'))
             .catch(next);
+    }
+
+    // [POST] /posts/handle-form-action
+    handleFormAction(req, res, next) {
+        switch (req.body.action) {
+            case 'delete':
+                Post.delete({ _id: { $in: req.body.postIds } })
+                    .then(() => res.redirect('back'))
+                    .catch(next);
+                break;
+            default:
+                res.json({message: 'Action invalid'})
+        }
     }
 }
 
