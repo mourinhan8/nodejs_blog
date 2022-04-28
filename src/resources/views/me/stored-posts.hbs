@@ -14,7 +14,7 @@
                 <option value="delete">Xoá</option>
             </select>
 
-            <button class="btn btn-primary btn-sm check-all-submit-btn disabled">
+            <button class="btn btn-primary btn-sm check-all-submit-btn" disabled>
                 Áp dụng
             </button>
         </div>
@@ -24,9 +24,18 @@
         <thead>
             <tr>
                 <th scope="col" colspan="2">#</th>
-                <th scope="col">Tên bài</th>
-                <th scope="col">Trình độ</th>
-                <th scope="col">Thời gian tạo</th>
+                <th scope="col">
+                    Tên bài
+                    {{{sortable 'name' _sort}}}
+                </th>
+                <th scope="col">
+                    Trình độ
+                    {{{sortable 'level' _sort}}}
+                </th>
+                <th scope="col">
+                    Thời gian tạo
+                    {{{sortable 'createdAt' _sort}}}
+                </th>
                 <th></th>
             </tr>
         </thead>
@@ -90,7 +99,8 @@
 
         var postID;
         var deleteForm = document.forms['delete-post-form'];
-        var containerForm = document.forms['container-form'];
+        //var containerForm = document.forms['container-form'];
+        var containerForm = $('form[name="container-form"]')
         var btnDeletePost = document.getElementById('btn-delete-post');
         var checkboxAll = $('#checkbox-all');
         //var checkboxAll = document.getElementById('checkbox-all')
@@ -124,20 +134,21 @@
         })
 
         // Check all submit button clicked
-        checkAllSubmitBtn.on('submit', function (e) {
-            var isSubmittable = !$(this).hasClass('disabled')
-            if (!isSubmittable) {
-                e.preventDefault();
-            }
-        })
+
+        //containerForm.on('submit', function (e) {
+        //    var isSubmittable = !checkAllSubmitBtn.hasClass('disabled')
+        //    if (!isSubmittable) {
+        //        e.preventDefault();
+        //    }
+        //})
 
         // Re-render check all submit button
         function renderCheckAllSubmitBtn() {
             var checkedCount = $('input[name="postIds[]"]:checked').length;
             if (checkedCount) {
-                checkAllSubmitBtn.removeClass('disabled');
+                checkAllSubmitBtn.attr('disabled', false);
             } else {
-                checkAllSubmitBtn.addClass('disabled');
+                checkAllSubmitBtn.attr('disabled', true);
             }
         }
         // JS thuan
