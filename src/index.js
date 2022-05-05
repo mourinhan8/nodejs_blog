@@ -4,7 +4,7 @@ const path = require('path');
 const methodOverride = require('method-override');
 const render = require('express/lib/response');
 const morgan = require('morgan');
-const sortMiddleware = require('./app/middleware/SortMiddleware')
+const sortMiddleware = require('./app/middleware/sortMiddleware')
 
 const app = express();
 const port = 3000;
