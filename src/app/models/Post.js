@@ -1,11 +1,13 @@
 const mongoose = require('mongoose');
+const AutoIncrement = require('mongoose-sequence')(mongoose);
 const slug = require('mongoose-slug-generator');
 var mongooseDelete = require('mongoose-delete');
 
-const Schema = mongoose.Schema;
+//const Schema = mongoose.Schema;
 
-const Post = new Schema(
+const PostSchema = new mongoose.Schema(
     {
+        _id: { type: Number },
         name: { type: String, required: true },
         description: { type: String },
         img: { type: String },
@@ -16,14 +18,28 @@ const Post = new Schema(
         // updatedAt: { type: Date, default: Date.now },
     },
     {
+        _id: false,
         timestamps: true,
     },
 );
 
+// Custom query helpers
+PostSchema.query.sortable = function (req) {
+    if (req.query.hasOwnProperty('_sort')) {
+        const isValidType = ['asc', 'desc'].includes(req.query.type);
+        return this.sort({
+            [req.query.column]: isValidType ? req.query.type : 'desc',
+        });
+    }
+    return this;
+};
+
+// Add plugin
 mongoose.plugin(slug);
-Post.plugin(mongooseDelete, {
+PostSchema.plugin(AutoIncrement);
+PostSchema.plugin(mongooseDelete, {
     deletedAt: true,
     overrideMethods: 'all',
 });
 
-module.exports = mongoose.model('Post', Post);
+module.exports = mongoose.model('Post', PostSchema);

@@ -1,9 +1,7 @@
-
-module.exports = function sortMiddleware (req, res, next) {
-
+module.exports = function sortMiddleware(req, res, next) {
     res.locals._sort = {
         enabled: false,
-        type: 'default'
+        type: 'default',
     };
 
     if (req.query.hasOwnProperty('_sort')) {
@@ -19,8 +17,6 @@ module.exports = function sortMiddleware (req, res, next) {
     }
 
     next();
-
-}
+};
 
 //module.exports = sortMiddleware
-

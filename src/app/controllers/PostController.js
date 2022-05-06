@@ -24,7 +24,7 @@ class PostController {
         const post = new Post(formData);
         post.save()
             .then(() => res.redirect(`/posts/${post.slug}`))
-            .catch((error) => {});
+            .catch(next);
     }
 
     // [GET] /posts/:id/edit
@@ -42,7 +42,7 @@ class PostController {
     // [PUT] /posts/:id
     update(req, res, next) {
         Post.updateOne({ _id: req.params.id }, req.body)
-            .then(() => Post.findById( req.params.id))
+            .then(() => Post.findById(req.params.id))
             .then((post) => {
                 var slug = post.slug;
                 res.redirect(`/posts/${slug}`);
@@ -80,7 +80,7 @@ class PostController {
                     .catch(next);
                 break;
             default:
-                res.json({message: 'Action invalid'})
+                res.json({ message: 'Action invalid' });
         }
     }
 }
