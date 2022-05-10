@@ -1,6 +1,7 @@
 <div class="mt-4">
     <h3>Tạo bài viết</h3>
     <form class="mt-4" method="post" action="/posts/store">
+        <input type="hidden" name="_csrf" value="{{_token}}">
         <div class="form-group">
             <label for="name">Tên bài</label>
             <input type="text" class="form-control" id="name" name="name">

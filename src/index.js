@@ -4,7 +4,11 @@ const path = require('path');
 const methodOverride = require('method-override');
 const render = require('express/lib/response');
 const morgan = require('morgan');
+const expressSession = require('express-session');
 const sortMiddleware = require('./app/middleware/sortMiddleware');
+const csrfTokenMiddleware = require('./app/middleware/csrfTokenMiddleware');
+const csrf = require('csurf');
+const cookieParser = require('cookie-parser');
 
 const app = express();
 const port = 3000;
@@ -23,8 +27,12 @@ app.use(
     }),
 );
 app.use(express.json());
+app.use(cookieParser());
+app.use(csrf({ cookie: true }));
 
 app.use(methodOverride('_method'));
+
+app.use(csrfTokenMiddleware);
 
 // Custom middleware
 app.use(sortMiddleware);
