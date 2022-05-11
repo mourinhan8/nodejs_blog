@@ -7,14 +7,17 @@ class PostController {
     show(req, res, next) {
         Post.findOne({ slug: req.params.slug })
             .then((post) => {
-                res.render('posts/show', { post: mongooseToObj(post) });
+                res.render('posts/show', {
+                    post: mongooseToObj(post),
+                    title: 'Post detail',
+                });
             })
             .catch(next);
     }
 
     // [GET] /posts/create
     create(req, res) {
-        res.render('posts/create');
+        res.render('posts/create', { title: 'Create new post' });
     }
 
     // [POST] /posts/store
@@ -34,6 +37,7 @@ class PostController {
             .then((post) =>
                 res.render('posts/edit', {
                     post: mongooseToObj(post),
+                    title: 'Edit post',
                 }),
             )
             .catch(next);

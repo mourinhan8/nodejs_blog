@@ -18,6 +18,7 @@ class SiteController {
             .then((posts) => {
                 res.render('home', {
                     posts: multipleMongooseToObj(posts),
+                    title: 'Home',
                 });
             })
             .catch((error) => next(error));
@@ -25,7 +26,7 @@ class SiteController {
 
     // [GET] /search
     search(req, res) {
-        res.render('search');
+        res.render('search', { title: 'Home' });
     }
 }
 
