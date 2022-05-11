@@ -2,7 +2,7 @@ const Post = require('../models/Post');
 const { multipleMongooseToObj } = require('../../util/mongoose');
 class SiteController {
     // [GET] /
-    index(req, res) {
+    index(req, res, next) {
         // Callback
         // Post.find({}, function (err, posts, next) {
         //     if (!err){
@@ -20,7 +20,7 @@ class SiteController {
                     posts: multipleMongooseToObj(posts),
                 });
             })
-            .catch((err) => next(err));
+            .catch((error) => next(error));
     }
 
     // [GET] /search

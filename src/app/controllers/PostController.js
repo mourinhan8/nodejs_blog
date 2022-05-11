@@ -24,7 +24,7 @@ class PostController {
         const post = new Post(formData);
         post.save()
             .then(() => res.redirect(`/posts/${post.slug}`))
-            .catch(next);
+            .catch((error) => {});
     }
 
     // [GET] /posts/:id/edit
