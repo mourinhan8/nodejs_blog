@@ -9,7 +9,7 @@ const sortMiddleware = require('./app/middleware/sortMiddleware');
 const csrfTokenMiddleware = require('./app/middleware/csrfTokenMiddleware');
 const csrf = require('csurf');
 const cookieParser = require('cookie-parser');
-const favicon = require('serve-favicon');
+//const favicon = require('serve-favicon');
 
 const app = express();
 const port = 3000;
@@ -21,7 +21,7 @@ const route = require('./routes');
 db.connect();
 
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(favicon(path.join(__dirname, 'public', 'img', 'favicon.png')));
+//app.use(favicon(path.join(__dirname, 'public', 'favicon.png')));
 
 app.use(
     express.urlencoded({
